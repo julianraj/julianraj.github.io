@@ -1,0 +1,43 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<dom-module id="portfolio-skill-bar">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        #wrapper {
+            position: relative;
+            overflow: hidden;
+            width: 100%;
+            height: 10px;
+            border: 1px solid var(--bar-color, aqua);
+            border-radius: 10px;
+        }
+        
+        #progress {
+            height: 10px;
+            background-color: var(--bar-color, aqua);
+            transition: 2s linear;
+            transition-property: width, background-color;
+        }
+        </style>
+        <div id="wrapper">
+            <div id="progress"></div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: "portfolio-skill-bar",
+        properties: {
+            percentage: {
+                type: Number,
+                observer: "_onPercentageChanged"
+            }
+        },
+        _onPercentageChanged: function(e) {
+            this.$.progress.style.width = e + "%"
+        }
+    });
+    </script>
+</dom-module>

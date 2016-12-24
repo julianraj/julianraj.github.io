@@ -1,0 +1,197 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+
+<link rel="import" href="portfolio-section-title.html">
+<link rel="import" href="portfolio-skill-section.html">
+<link rel="import" href="portfolio-experience.html">
+<dom-module id="portfolio-about">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        .sub-section {
+            margin-bottom: 40px;
+        }
+        
+        h3 {
+            color: #313131;
+            font-size: 24px;
+            line-height: 34px;
+            font-weight: 400;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        h3 span#different {
+            font-family: Aduiowide;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+        
+        portfolio-skill-section.group1 {
+            --skill-color: #eeac02;
+        }
+        
+        portfolio-skill-section.group2 {
+            --skill-color: #3cb5b5;
+        }
+        
+        portfolio-skill-section.group3 {
+            --skill-color: #e53b51;
+        }
+        
+        portfolio-experience {
+            width: 100%;
+            margin-bottom: 20px;
+        }
+        
+        .experience-wrapper {
+            position: relative;
+        }
+        
+        .date-wrapper {
+            position: absolute;
+            left: -91px;
+            top: 47px;
+            bottom: 47px;
+            display: inline-block;
+            padding: 8px 12px 6px;
+            background-color: #3cb5b5;
+            -webkit-transform: rotate(-90deg);
+            -ms-transform: rotate(-90deg);
+            transform: rotate(-90deg);
+            color: #fff;
+            font-size: 12px;
+        }
+        
+        @media only screen and (max-width:780px) {
+            .sub-section {
+                margin-bottom: 30px;
+            }
+            h3 {
+                font-size: 20px;
+                line-height: 30px;
+            }
+        }
+        
+        @media only screen and (max-width:565px) {
+            .sub-section {
+                margin-bottom: 25px;
+            }
+            h3 {
+                font-size: 18px;
+                line-height: 26px;
+            }
+        }
+        </style>
+        <portfolio-section-title title="01. About me"></portfolio-section-title>
+        <div class="sub-section">
+            <h3>My name is Julian Raj Manandhar. I'm a Mobile Developer</h3>
+        </div>
+        <portfolio-section-title title="02. Professional Skills"></portfolio-section-title>
+        <div class="sub-section">
+            <portfolio-skill-section class="sub-section group1" skill-set="{{ skillSet1 }}"></portfolio-skill-section>
+            <portfolio-skill-section class="sub-section group2" skill-set="{{ skillSet2 }}"></portfolio-skill-section>
+            <portfolio-skill-section class="sub-section group3" skill-set="{{ skillSet3 }}"></portfolio-skill-section>
+        </div>
+        <portfolio-section-title title="03. Work Experience"></portfolio-section-title>
+        <div class="sub-section">
+            <template is="dom-repeat" items="{{ workExperiences }}">
+                <div class="experience-wrapper">
+                    <portfolio-experience experience="{{ item }}" small-screen="[[ smallScreen ]]"></portfolio-experience>
+                    <div class="date-wrapper" hidden$="[[ smallScreen ]]">{{ item.period }}</div>
+                </div>
+            </template>
+        </div>
+        <portfolio-section-title title="04. Education"></portfolio-section-title>
+        <div class="sub-section">
+            <template is="dom-repeat" items="{{ education }}">
+                <div class="experience-wrapper">
+                    <portfolio-experience experience="{{ item }}" small-screen="[[ smallScreen ]]"></portfolio-experience>
+                    <div class="date-wrapper" hidden$="[[ smallScreen ]]">{{ item.period }}</div>
+                </div>
+            </template>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: "portfolio-about",
+        properties: {
+            smallScreen: {
+                type: Boolean,
+                observer: "asd"
+            }
+        },
+        asd: function(e) {
+            console.log(e)
+        },
+        ready: function() {
+            this.workExperiences = [{
+                organization: "Kudo Inc.",
+                period: "2016 - ----",
+                role: "Lead Mobile Developer",
+                logo: "../images/experience/kudo_logo.png"
+            }, {
+                organization: "Young Innovations",
+                period: "2014 - 2016",
+                role: "Android Developer",
+                logo: "../images/experience/yipl_logo.png"
+            }, {
+                organization: "E.B. Pearls",
+                period: "2013 - 2014",
+                role: "PHP Developer",
+                logo: "../images/experience/eb_logo.jpg"
+            }], this.education = [{
+                organization: "Concordia University",
+                period: "2017 - 2019",
+                role: "Masters in Applied Computer Science",
+                logo: "../images/experience/concordia_logo.jpeg"
+            }, {
+                organization: "Kathmandu University",
+                period: "2009 - 2013",
+                role: "Computer Engineering",
+                logo: "../images/experience/ku_logo.png"
+            }], this.skillSet1 = [{
+                title: "Java",
+                percentage: 80
+            }, {
+                title: "Kotlin",
+                percentage: 80
+            }, {
+                title: "Swift",
+                percentage: 70
+            }, {
+                title: "Android Development",
+                percentage: 80
+            }, {
+                title: "iOS Development",
+                percentage: 60
+            },{
+                title: "Polymer",
+                percentage: 75
+            }, {
+                title: "Web Services",
+                percentage: 80
+            }, {
+                title: "PHP",
+                percentage: 80
+            }], this.skillSet2 = [{
+                title: "Machine Learning",
+                percentage: 30
+            }], this.skillSet3 = [{
+                title: "Responsible",
+                percentage: 100
+            }, {
+                title: "Passion",
+                percentage: 100
+            }, {
+                title: "Colaboration and Communication",
+                percentage: 100
+            }]
+        }
+    });
+    </script>
+</dom-module>

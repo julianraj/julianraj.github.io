@@ -1,0 +1,185 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/app-route/app-location.html">
+<link rel="import" href="/bower_components/app-route/app-route.html">
+<link rel="import" href="/bower_components/app-layout/app-scroll-effects/effects/waterfall.html">
+<link rel="import" href="/bower_components/app-layout/app-scroll-effects/effects/resize-snapped-title.html">
+<link rel="import" href="/bower_components/app-layout/app-scroll-effects/effects/fade-background.html">
+<link rel="import" href="/bower_components/app-layout/app-drawer/app-drawer.html">
+<link rel="import" href="/bower_components/app-layout/app-header/app-header.html">
+<link rel="import" href="/bower_components/app-layout/app-toolbar/app-toolbar.html">
+<link rel="import" href="/bower_components/paper-card/paper-card.html">
+<link rel="import" href="/bower_components/paper-icon-button/paper-icon-button.html">
+<link rel="import" href="/bower_components/iron-media-query/iron-media-query.html">
+<link rel="import" href="/bower_components/iron-pages/iron-pages.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="portfolio-sidebar.html">
+
+<dom-module id="portfolio-app">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        #container {
+            max-width: 920px;
+            margin: 0 auto;
+            padding: 16px;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+        
+        app-header {
+            @apply(--layout-fixed-top);
+            background-color: #efefef;
+            z-index: 1;
+            --app-header-shadow: {
+                box-shadow: inset 0px 5px 6px -3px rgba(0, 0, 0, 0.2);
+                height: 10px;
+                bottom: -10px;
+            }
+            ;
+        }
+        
+        #normal-header,
+        #header {
+            width: 100%;
+            height: 190px;
+            display: table;
+        }
+        
+        #normal-header {
+            display: table;
+        }
+        
+        #normal-header span,
+        #header span {
+            width: 100%;
+            font-family: Audiowide;
+            text-align: center;
+            font-size: 60px;
+            display: table-cell;
+            vertical-align: middle;
+        }
+        
+        #normal-header span {
+            display: table-cell;
+            vertical-align: middle;
+        }
+
+        #header span {
+            display: flex;
+            justify-content: center;
+        }
+        
+        #header::shadow #contentContainer.app-header {
+            text-align: -webkit-center;
+        }
+        
+        #sidebar {
+            display: inline-block;
+            width: 280px;
+            margin-right: 20px;
+        }
+        
+        #mainContent {
+            display: inline-block;
+            width: calc(100% - 305px);
+            padding: 30px 30px 50px;
+            float: right;
+            background: #fff;
+            margin-bottom: 48px;
+        }
+        
+        @media only screen and (max-width:780px) {
+            #normal-header span,
+            #header span {
+                font-size: 45px;
+            }
+            #content {
+                margin-top: 190px;
+            }
+            #sidebar {
+                display: none;
+            }
+            #drawer {
+                --app-drawer-width: 280px;
+                z-index: 999;
+            }
+            #drawer portfolio-sidebar {
+                width: 100%;
+                height: 100%;
+                overflow: auto;
+            }
+            #mainContent {
+                display: block;
+                width: 100%;
+            }
+        }
+        </style>
+        <app-location route="{{ route }}" use-hash-as-path=""></app-location>
+        <iron-media-query query="max-width: 780px" query-matches="{{ smallScreen }}"></iron-media-query>
+        <app-route route="{{ route }}" pattern="/:page" data="{{ routeData }}" tail="{{ subroute }}"></app-route>
+        <div id="container">
+            <div id="normal-header" hidden$="{{ smallScreen }}">
+                <span>Juilan R. Manandhar</span>
+            </div>
+            <app-header role="navigation" id="header" hidden$="{{ !smallScreen }}" condenses="" reveals="" effects="waterfall resize-snapped-title fade-background" effects-config="{&quot;resize-snapped-title&quot;: {&quot;startsAt&quot;: 0.8, &quot;duration&quot;: &quot;100ms&quot;}, &quot;fade-background&quot;: {&quot;startsAt&quot;: 0.8, &quot;endsAt&quot;: 0.9}}">
+                <app-toolbar>
+                    <div class="left-bar-item">
+                        <paper-icon-button class="menu-btn" icon="menu" on-click="_toggleDrawer">
+                        </paper-icon-button>
+                    </div>
+                    <label condensed-title="">Juilan M.</label>
+                </app-toolbar>
+                <span main-title="">Julian M.</span>
+            </app-header>
+            <div id="content">
+                <paper-card id="sidebar" elevation="2">
+                    <portfolio-sidebar page="{{ page }}"></portfolio-sidebar>
+                </paper-card>
+                <paper-card id="mainContent" elevation="2">
+                    <iron-pages role="main" selected="[[ page ]]" attr-for-selected="name">
+                        <portfolio-about name="about" small-screen="[[ smallScreen ]]"></portfolio-about>
+                        <portfolio-portfolio name="portfolio"></portfolio-portfolio>
+                        <portfolio-contact name="contact"></portfolio-contact>
+                    </iron-pages>
+                </paper-card>
+                <template is="dom-if" id="smallScreenIf" if="[[ smallScreen ]]">
+                    <app-drawer id="drawer" opened="{{drawerOpened}}" swipe-open="" tabindex="0">
+                        <portfolio-sidebar page="{{ page }}"></portfolio-sidebar>
+                    </app-drawer>
+                </template>
+            </div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: "portfolio-app",
+        properties: {
+            page: {
+                type: String,
+                reflectToAttribute: !0,
+                observer: "_pageChanged"
+            }
+        },
+        observers: ["_routePageChanged(routeData.page)"],
+        ready: function() {},
+        _routePageChanged: function(e) {
+            this.page = e || "about"
+        },
+        _pageChanged: function(e, t) {
+            null != e && this.importHref(this.resolveUrl("portfolio-" + e + ".html"), null, null, !0), this.drawerOpened = !1, this.$.mainContent.scrollIntoView({
+                behavior: "smooth"
+            });
+            document.body.scrollTop = 0; // For Safari
+            document.documentElement.scrollTop = 0; // For Chrome, Firefox, IE and Opera
+        },
+        _toggleDrawer: function() {
+            this.drawerOpened = !this.drawerOpened
+        }
+    });
+    </script>
+</dom-module>

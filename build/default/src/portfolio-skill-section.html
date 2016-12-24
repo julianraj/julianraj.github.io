@@ -1,0 +1,43 @@
+<link rel="import" href="../bower_components/polymer/polymer.html">
+<link rel="import" href="portfolio-skill-bar.html">
+<dom-module id="portfolio-skill-section">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        .skill-item {
+            margin-bottom: 15px;
+        }
+        
+        .skill-item .title {
+            margin-bottom: 6px;
+            color: #888;
+            font-size: 12px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+        
+        portfolio-skill-bar {
+            --bar-color: var(--skill-color, aqua);
+        }
+        </style>
+        <template is="dom-repeat" items="{{ skillSet }}">
+            <div class="skill-item">
+                <label class="title">{{ item.title }}</label>
+                <portfolio-skill-bar percentage="{{ item.percentage }}"></portfolio-skill-bar>
+            </div>
+        </template>
+    </template>
+    <script>
+    Polymer({
+        is: "portfolio-skill-section",
+        properties: {
+            skillSet: {
+                type: Array
+            }
+        }
+    });
+    </script>
+</dom-module>

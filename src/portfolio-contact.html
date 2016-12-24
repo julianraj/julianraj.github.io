@@ -1,0 +1,94 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/google-map/google-map.html">
+<link rel="import" href="/bower_components/google-map/google-map.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="/bower_components/iron-icons/communication-icons.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="portfolio-section-title.html">
+<dom-module id="portfolio-contact">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        google-map {
+            height: 300px;
+            margin-bottom: 40px;
+        }
+        
+        .info-wrapper {
+            display: block;
+            width: 100%;
+            color: #919191;
+        }
+        
+        .info-wrapper .row {
+            display: flex;
+        }
+        
+        .info-wrapper .row .cell {
+            flex: 1;
+            border-left: 7px solid transparent;
+            border-right: 7px solid transparent;
+        }
+        
+        .info-wrapper .row .cell p {
+            font-family: Poppins-Regular;
+            margin-bottom: 10px;
+            color: #919191;
+            line-height: 24px;
+            font-weight: 300;
+            font-size: 14px;
+        }
+        
+        @media only screen and (max-width:565px) {
+            .info-wrapper .row {
+                display: block;
+            }
+            .info-wrapper .row .cell {
+                display: block;
+            }
+        }
+        
+        @media only screen and (min-width:565px) and (max-width: 880px) {
+            .info-wrapper .row .cell p {
+                line-height: 22px;
+                font-size: 12px;
+            }
+        }
+        </style>
+        <portfolio-section-title title="Contact Details"></portfolio-section-title>
+        <div class="map-wrapper">
+            <google-map latitude="[[ lat ]]" longitude="[[ lng ]]" zoom="16" disable-default-ui="" disable-map-type-control="" disable-zoom="" api-key="AIzaSyAKxono1n3c6Oa5xbcqMCSp0LKKTH2AovE">
+                <google-map-marker latitude="{{ lat }}" longitude="{{ lng }}" draggable="false"></google-map-marker>
+            </google-map>
+        </div>
+        <div class="info-wrapper">
+            <div class="row title">
+                <div class="cell span1">
+                    <iron-icon icon="communication:location-on"></iron-icon>
+                    <p>Montreal<br> Quebec, Canada</p>
+                </div>
+                <div class="cell span1">
+                    <iron-icon icon="communication:call"></iron-icon>
+                    <p>Skype: julian.raj
+                        <br> +1 514 448 3297</p>
+                </div>
+                <div class="cell span2">
+                    <iron-icon icon="communication:email"></iron-icon>
+                    <p>julianrajman@gmail.com</p>
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: "portfolio-contact",
+        properties: {},
+        ready: function() {
+            this.lat = 45.493873, this.lng = -73.582940
+        }
+    });
+    </script>
+</dom-module>

@@ -1,0 +1,115 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<dom-module id="portfolio-experience">
+    <template>
+        <style>
+        :host {
+            display: block;
+            color: #717171;
+            font-size: 14px;
+        }
+
+        [hidden] {
+            display: none !important;
+        }
+        
+        .wrapper {
+            width: 100%;
+            display: table;
+            table-layout: fixed;
+            border-spacing: 10px;
+            padding: 16px;
+            width: -moz-available;
+            border-bottom: 1px solid #e1e1e1;
+            -webkit-transition: background-color 400ms ease;
+            transition: background-color 400ms ease;
+        }
+        
+        .wrapper:hover {
+            background-color: #e1e1e1;
+        }
+        
+        .wrapper div {
+            display: table-cell;
+            vertical-align: middle;
+        }
+        
+        .date-wrapper {
+            display: inline-block;
+            padding: 8px 12px 6px;
+            background-color: #3cb5b5;
+            font-size: 12px;
+            color: #fff;
+        }
+        
+        .logo {
+            width: 70px;
+            height: 70px;
+            border-radius: 100%;
+            background-repeat: no-repeat;
+            background-size: contain;
+            background-position: 50% 50%;
+            margin-right: 10px;
+        }
+        
+        .info {
+            width: calc(50% - 43px);
+        }
+
+        .title{
+            font-style: bold;
+        }
+        
+        @media only screen and (max-width:565px) {
+            .wrapper {
+                display: block;
+            }
+            .wrapper .logo,
+            .wrapper .info {
+                display: block;
+            }
+            .wrapper .info {
+                margin-top: 20px;
+            }
+            .wrapper div .date-wrapper {
+                display: inline-block;
+                padding: 8px 12px 6px;
+                background-color: #3cb5b5;
+                font-size: 12px;
+            }
+            .logo {
+                margin-right: 0;
+            }
+            .info {
+                width: auto;
+            }
+        }
+        </style>
+        <div class="wrapper">
+            <div class="logo" style="background-image: url([[ experience.logo ]])"></div>
+            <div class="info title">
+                {{experience.organization}}
+            </div>
+            <div class="info">
+                {{experience.role}}
+            </div>
+            <div class="info" hidden$="[[ !smallScreen ]]">
+                <div class="date-wrapper">
+                    {{experience.period}}
+                </div>
+            </div>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: "portfolio-experience",
+        properties: {
+            experience: {
+                type: Object
+            },
+            smallScreen: {
+                type: Boolean
+            }
+        }
+    });
+    </script>
+</dom-module>

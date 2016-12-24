@@ -1,0 +1,185 @@
+<link rel="import" href="/bower_components/polymer/polymer.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
+<link rel="import" href="/bower_components/iron-icons/image-icons.html">
+<link rel="import" href="/bower_components/iron-icons/communication-icons.html">
+<dom-module id="portfolio-sidebar">
+    <template>
+        <style>
+        :host {
+            display: block;
+        }
+        
+        .grayscale {
+            position: relative;
+        }
+        
+        .grayscale .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(85, 85, 85, .4);
+        }
+        
+        .grayscale #signature {
+            color: #fff;
+            position: absolute;
+            bottom: 20px;
+            right: 16px;
+            font-family: Signerica;
+            -ms-transform: rotate(-45deg);
+            /* IE 9 */
+            -webkit-transform: rotate(-45deg);
+            /* Chrome, Safari, Opera */
+            transform: rotate(-45deg);
+            text-decoration: underline;
+        }
+        
+        .profile-image {
+            width: 100%;
+            max-height: 300px;
+            display: block;
+        }
+        
+        .menu {
+            margin: 0;
+            width: 100%;
+            background: #000;
+            color: #fff;
+        }
+        
+        .menu a {
+            text-decoration: none;
+            color: #fff;
+        }
+        
+        .menu .menu-item {
+            padding: 20px 22px;
+            border-bottom: 1px solid hsla(0, 0%, 100%, .06);
+        }
+        
+        .menu .menu-item iron-icon {
+            float: right;
+        }
+        
+        .menu .menu-item label {
+            color: #929292;
+            font-size: 12px;
+            letter-spacing: 2px;
+            cursor: pointer;
+        }
+        
+        .menu .menu-item label.active,
+        .menu .menu-item label:hover {
+            color: #fff;
+        }
+        
+        #footer {
+            background: #fff;
+            text-align: center;
+            padding: 10px;
+            border-top: solid 1px #eaeaea;
+            margin-top: 15px;
+        }
+        
+        #footer span {
+            margin-bottom: 0px;
+            color: #929292;
+            font-size: 14px;
+            font-weight: 300;
+            width: 100%;
+        }
+        
+        @media only screen and (max-width:780px) {
+            .menu .menu-item {
+                padding: 12px 15px;
+            }
+        }
+        
+        iron-icon.social {
+            --iron-icon-height: 24px;
+            --iron-icon-width: 24px;
+        }
+        
+        .social-block {
+            margin: 0 auto;
+            padding: 10px;
+            text-align: center;
+        }
+        
+        .social-block a {
+            margin-left: 5px;
+            margin-right: 5px;
+            text-decoration: none;
+        }
+        </style>
+        <div class="grayscale">
+            <img class="profile-image" src="../images/profile_image1.jpg">
+            <div class="overlay"></div>
+            <label id="signature">J.Raj</label>
+        </div>
+        <div class="menu">
+            <template is="dom-repeat" items="{{ menu }}">
+                <a href="{{ item.endPoint }}">
+                    <div class="menu-item">
+                        <label class$="{{ _generateClass(page, item.title) }}">{{ item.title }}</label>
+                        <iron-icon icon="{{ item.icon }}"></iron-icon>
+                    </div>
+                </a>
+            </template>
+        </div>
+        <div class="social-block">
+            <template is="dom-repeat" items="{{ social }}">
+                <a href="{{ item.endPoint }}" target="blank">
+                    <iron-icon class="social" src="{{ item.icon }}"></iron-icon>
+                </a>
+            </template>
+        </div>
+        <div id="footer">
+            <span>
+                © 2018 Julian Raj Manandhar
+            </span>
+        </div>
+    </template>
+    <script>
+    Polymer({
+        is: "portfolio-sidebar",
+        properties: {
+            page: {
+                type: String
+            }
+        },
+        ready: function() {
+            this.menu = [{
+                title: "About Me",
+                icon: "account-circle",
+                endPoint: "/#/about"
+            }, {
+                title: "Portfolio",
+                icon: "image:camera-alt",
+                endPoint: "/#/portfolio"
+            }, {
+                title: "Contact",
+                icon: "communication:call",
+                endPoint: "/#/contact"
+            }], this.social = [{
+                title: "Google Plus",
+                icon: "../images/social/googleplus.png",
+                endPoint: "https://plus.google.com/+JulianRaj"
+            }, {
+                title: "LinkedIn",
+                icon: "../images/social/linkedin.png",
+                endPoint: "https://np.linkedin.com/in/julian-raj-manandhar"
+            }, {
+                title: "Github",
+                icon: "../images/social/github.png",
+                endPoint: "https://github.com/julianraj"
+            }]
+        },
+        _generateClass: function(t, i) {
+            return "about" === t && "About Me" === i || "contact" === t && "Contact" === i || "portfolio" === t && "Portfolio" === i ? "active" : ""
+        }
+    });
+    </script>
+</dom-module>
